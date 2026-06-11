@@ -32,4 +32,4 @@ Two taxonomies are configured: `tags`, `series`.
 
 ### Deployment
 
-GitHub Actions workflow (`.github/workflows/pages.yml`) builds and deploys to GitHub Pages on push to `main`. The workflow uses `peaceiris/actions-hugo` for Hugo setup and `actions/deploy-pages` for deployment.
+Deployed on [Vercel](https://vercel.com/). The repo is connected to a Vercel project that auto-deploys on every push to `main`. Build settings live in `vercel.json` (`framework: hugo`, `HUGO_VERSION` pin, `www` → apex redirect, CORS header for `descriptions.json`). The custom domain is `hradecheck.com`.
