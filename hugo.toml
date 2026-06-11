@@ -1,0 +1,61 @@
+baseURL = "https://hradecheck.com/"
+languageCode = "en-us"
+theme = "poison"
+title = "hradecheck.com"
+pluralizelisttitles = false
+enableRobotsTXT = true
+
+[pagination]
+pagerSize = 10
+
+[params]
+brand = "hradecheck.com"
+description = "Personal blog by Ivo Hrádek — software architecture, system design, and building clean, reliable software."
+dark_mode = true
+brand_images_dir = "img/brand"
+
+github_url = "https://github.com/hradecek"
+linkedin_url = "https://linkedin.com/in/ivohradek"
+
+# Sidebar colors
+sidebar_bg_color = "#232023"
+sidebar_h1_color = "#c8d749"
+sidebar_a_color = "#c8d749"
+sidebar_socials_color = "#c8d749"
+sidebar_p_color = "#b0b0b0"
+sidebar_img_border_color = "#4a4a4a"
+
+# Light mode content colors
+content_bg_color = "#eae8e3"
+text_color = "#232023"
+post_title_color = "#232023"
+link_color = "#6b7a1a"
+list_color = "#4a4a4a"
+date_color = "#6b7a1a"
+
+# Dark mode content colors
+content_bg_color_dark = "#2d2a2d"
+text_color_dark = "#e0e0e0"
+post_title_color_dark = "#c8d749"
+link_color_dark = "#c8d749"
+list_color_dark = "#b0b0b0"
+date_color_dark = "#8a9e22"
+code_background_color_dark = "#2d2a2d"
+code_block_background_color_dark = "#1a181a"
+
+rss_icon = true
+rss_section = "posts"
+
+menu = [
+    {Name = "About me", URL = "/about-me/", HasChildren = false},
+    {Name = "Posts", URL = "/posts/", Pre = "Recent", HasChildren = true, Limit = 5},
+]
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+
+[taxonomies]
+series = "series"
+tags = "tags"

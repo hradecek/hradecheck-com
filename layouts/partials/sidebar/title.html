@@ -1,0 +1,50 @@
+<div class="sidebar-about">
+    <div class="brand">
+        <a href="{{ .Site.BaseURL }}" aria-label="{{ .Site.Title }} - Home">
+            {{ if .Site.Params.brand_images_dir }}
+                {{ $dir := .Site.Params.brand_images_dir }}
+                {{ $bases := slice }}
+                {{ range readDir (printf "static/%s/256" $dir) }}
+                    {{ if findRE "\\.webp$" .Name }}
+                        {{ $bases = $bases | append (replaceRE "\\.webp$" "" .Name) }}
+                    {{ end }}
+                {{ end }}
+                {{ if $bases }}
+                <picture>
+                    <source id="brand-source" type="image/webp"
+                        srcset="/{{ $dir }}/128/{{ index $bases 0 }}.webp 128w, /{{ $dir }}/256/{{ index $bases 0 }}.webp 256w, /{{ $dir }}/512/{{ index $bases 0 }}.webp 512w"
+                        sizes="(max-width: 768px) 128px, 256px">
+                    <img id="brand-image" src="/{{ $dir }}/256/{{ index $bases 0 }}.webp" alt="Profile photo of {{ .Site.Params.brand }}" width="256" height="256" loading="eager">
+                </picture>
+                <script>
+                    (function() {
+                        var bases = [{{ range $bases }}"{{ . }}",{{ end }}];
+                        var pick = bases[Math.floor(Math.random() * bases.length)];
+                        var dir = "/{{ $dir }}";
+                        var source = document.getElementById('brand-source');
+                        source.srcset = dir + '/128/' + pick + '.webp 128w, ' + dir + '/256/' + pick + '.webp 256w, ' + dir + '/512/' + pick + '.webp 512w';
+                        document.getElementById('brand-image').src = dir + '/256/' + pick + '.webp';
+                    })();
+                </script>
+                {{ end }}
+            {{ else if .Site.Params.remote_brand_image }}
+                <img src="{{ .Site.Params.remote_brand_image }}" alt="Profile photo of {{ .Site.Params.brand }}" width="256" height="256" loading="eager">
+            {{ else if .Site.Params.brand_image }}
+                <img src="{{ .Site.Params.brand_image }}" alt="Profile photo of {{ .Site.Params.brand }}" width="256" height="256" loading="eager">
+            {{ end }}
+            {{ if .Site.Params.brand }}
+                <h1>{{ .Site.Params.brand }}</h1>
+            {{ end }}
+        </a>
+    </div>
+    <p class="lead sidebar-description" id="sidebar-description" aria-live="polite"></p>
+    <script>
+        fetch('/descriptions.json')
+            .then(function(r) { return r.json(); })
+            .then(function(descriptions) {
+                var el = document.getElementById('sidebar-description');
+                el.textContent = descriptions[Math.floor(Math.random() * descriptions.length)];
+                el.classList.add('is-loaded');
+            });
+    </script>
+</div>

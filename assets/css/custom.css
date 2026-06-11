@@ -1,0 +1,247 @@
+@font-face {
+    font-family: "Pixelary";
+    src: url("/fonts/Pixelary.otf") format("opentype");
+    font-display: swap;
+}
+
+.brand {
+    font-size: inherit;
+}
+
+.sidebar-about h1,
+.sidebar-about h1 a {
+    font-family: "Pixelary", sans-serif;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
+.sidebar-about a:hover,
+.sidebar-about a:focus {
+    text-decoration: none;
+}
+
+.sidebar-about a:focus-visible {
+    outline: 2px solid var(--sidebar-h1-color);
+    outline-offset: 2px;
+    text-decoration: none;
+}
+
+.post-title a:hover,
+.post-title a:focus {
+    text-decoration: none;
+}
+
+@media (min-width: 48em) {
+    .sidebar-sticky {
+        width: 100%;
+    }
+}
+
+.footnote {
+    font-size: 0.7em;
+    color: var(--sidebar-p-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.pronunciation-toggle {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 0.85em;
+    border-bottom: 1px dashed currentColor;
+    padding: 0;
+    font-family: inherit;
+}
+
+.pronunciation-play {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+}
+
+.about-socials {
+    text-align: center;
+}
+
+.about-socials a {
+    margin: 0 0.25em;
+}
+
+.about-socials svg {
+    vertical-align: middle;
+}
+
+.sidebar-description {
+    font-style: italic;
+    font-size: 0.9em;
+    min-height: 1.4em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-description.is-loaded {
+    opacity: 1;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    padding: 0.5rem 1rem;
+    background: var(--sidebar-h1-color, #c8d749);
+    color: #232023;
+    z-index: 1000;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+.btn-light-dark:focus-visible {
+    outline: 2px solid var(--sidebar-h1-color);
+    outline-offset: 2px;
+}
+
+.social:focus-visible {
+    outline: 2px solid var(--sidebar-h1-color);
+    outline-offset: 2px;
+}
+
+hr {
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+    border-bottom: none;
+}
+
+/* ── Animations & effects ── */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Content fade-in on page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* Staggered fade-in for post list items */
+.entries li,
+.posts > .post {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.entries li:nth-child(1), .posts > .post:nth-child(1) { animation-delay: 0.05s; }
+.entries li:nth-child(2), .posts > .post:nth-child(2) { animation-delay: 0.1s; }
+.entries li:nth-child(3), .posts > .post:nth-child(3) { animation-delay: 0.15s; }
+.entries li:nth-child(4), .posts > .post:nth-child(4) { animation-delay: 0.2s; }
+.entries li:nth-child(5), .posts > .post:nth-child(5) { animation-delay: 0.25s; }
+.entries li:nth-child(n+6), .posts > .post:nth-child(n+6) { animation-delay: 0.3s; }
+
+/* Smooth link color transitions */
+.content a,
+.sidebar a,
+.post-title a {
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.content a:hover {
+    opacity: 0.8;
+}
+
+/* Tag pill hover effect */
+.tags li a {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tags li a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Social icon hover */
+.social {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.social:hover {
+    transform: translateY(-2px);
+    opacity: 0.8;
+}
+
+/* Brand image load + hover */
+@keyframes brandReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+.sidebar-about img {
+    animation: brandReveal 0.3s ease-out;
+}
+
+
+/* Light/dark toggle spin on hover */
+.btn-light-dark {
+    transition: transform 0.3s ease, background-color 0.2s ease;
+}
+
+.btn-light-dark:hover {
+    transform: rotate(20deg);
+}
+
+/* Code block hover glow (dark mode) */
+.dark-theme .highlight pre {
+    transition: box-shadow 0.3s ease;
+}
+
+.dark-theme .highlight pre:hover {
+    box-shadow: 0 0 12px rgba(200, 215, 73, 0.08);
+}
+
+/* Smooth dark/light mode transition */
+body {
+    transition: background-color 0.3s ease;
+}
+
+.content,
+.sidebar {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}

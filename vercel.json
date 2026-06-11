@@ -1,0 +1,24 @@
+{
+  "build": {
+    "env": {
+      "HUGO_VERSION": "0.142.0"
+    }
+  },
+  "framework": "hugo",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.hradecheck.com" }],
+      "destination": "https://hradecheck.com/:path*",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/descriptions.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
