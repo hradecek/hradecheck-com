@@ -245,3 +245,27 @@ body {
         scroll-behavior: auto;
     }
 }
+/* Language switcher (sidebar) */
+.lang-switcher {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.lang-switcher a {
+    color: var(--sidebar-p-color);
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.lang-switcher a:hover {
+    color: var(--sidebar-a-color);
+    opacity: 1;
+}
+
+.lang-switcher a.active {
+    color: var(--sidebar-a-color);
+    font-weight: 600;
+    opacity: 1;
+}

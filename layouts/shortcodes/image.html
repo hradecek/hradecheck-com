@@ -1,0 +1,12 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $caption := .Get "caption" -}}
+{{- with resources.Get $src -}}
+{{- $isRaster := ne .MediaType.SubType "svg" -}}
+<figure class="post-image">
+    <img src="{{ .RelPermalink }}" alt="{{ $alt }}" loading="lazy"{{ if $isRaster }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}>
+    {{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>
+{{- else -}}
+    {{- errorf "image shortcode: asset %q not found (in %s)" $src $.Position -}}
+{{- end -}}

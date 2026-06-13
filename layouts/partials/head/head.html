@@ -15,6 +15,13 @@
     <!-- META -->
     {{ partial "head/meta.html" . }}
 
+    <!-- hreflang alternates for translated pages -->
+    {{ if .IsTranslated }}
+        {{ range .AllTranslations }}
+            <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+        {{ end }}
+    {{ end }}
+
     <!-- CSS stylesheets -->
     {{ partial "head/stylesheets.html" . }}
 
