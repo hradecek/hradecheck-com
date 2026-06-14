@@ -2,12 +2,16 @@
     <body class="{{if .Site.Params.layoutReverse}}layout-reverse {{end}}{{if .Site.Params.dark_mode}}dark-theme{{end}}">
         <script>
             (function() {
-                var theme = localStorage.getItem("theme");
-                if (theme === "light") {
-                    document.body.classList.remove("dark-theme");
-                } else if (theme === "dark") {
-                    document.body.classList.add("dark-theme");
+                var stored = localStorage.getItem("theme");
+                var dark;
+                if (stored === "light" || stored === "dark") {
+                    // Explicit user choice always wins.
+                    dark = stored === "dark";
+                } else {
+                    // First visit: follow the OS / browser preference.
+                    dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
                 }
+                document.body.classList.toggle("dark-theme", dark);
             })();
         </script>
         <a class="skip-link" href="#main-content">Skip to content</a>
