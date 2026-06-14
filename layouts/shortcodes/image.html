@@ -1,12 +1,20 @@
 {{- $src := .Get "src" -}}
 {{- $alt := .Get "alt" | default "" -}}
 {{- $caption := .Get "caption" -}}
-{{- with resources.Get $src -}}
-{{- $isRaster := ne .MediaType.SubType "svg" -}}
-<figure class="post-image">
-    <img src="{{ .RelPermalink }}" alt="{{ $alt }}" loading="lazy"{{ if $isRaster }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}>
-    {{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end -}}
-</figure>
-{{- else -}}
+{{- $light := resources.Get $src -}}
+{{- if not $light -}}
     {{- errorf "image shortcode: asset %q not found (in %s)" $src $.Position -}}
 {{- end -}}
+{{/* Derive the dark variant: insert _dark before the language/extension suffix,
+     e.g. img/flow.svg -> img/flow_dark.svg, img/flow.sk.svg -> img/flow_dark.sk.svg.
+     The directory contains no dots, so splitting on "." isolates the stem safely. */}}
+{{- $stem := index (split $src ".") 0 -}}
+{{- $rest := strings.TrimPrefix $stem $src -}}
+{{- $dark := resources.Get (printf "%s_dark%s" $stem $rest) -}}
+<figure class="post-image">
+    <img class="img-light" src="{{ $light.RelPermalink }}" alt="{{ $alt }}" loading="lazy">
+    {{- with $dark }}
+    <img class="img-dark" src="{{ .RelPermalink }}" alt="{{ $alt }}" loading="lazy">
+    {{- end }}
+    {{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>

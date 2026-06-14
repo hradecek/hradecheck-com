@@ -51,7 +51,7 @@ rss_section = "posts"
 
 menu = [
     {Name = "About me", URL = "/about-me/", HasChildren = false},
-    {Name = "Posts", URL = "/posts/", Pre = "Recent", HasChildren = true, Limit = 5},
+    {Name = "Posts", URL = "/posts/", Pre = "Recent", HasChildren = true, Limit = 3},
 ]
 
 [markup]
