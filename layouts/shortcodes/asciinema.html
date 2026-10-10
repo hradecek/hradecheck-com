@@ -1,0 +1,41 @@
+{{- $src := .Get "src" -}}
+{{- if not $src -}}
+    {{- errorf "asciinema shortcode: missing src (in %s)" $.Position -}}
+{{- end -}}
+{{- $src = strings.TrimPrefix "/" $src -}}
+{{- if not (fileExists (printf "static/%s" $src)) -}}
+    {{- errorf "asciinema shortcode: cast %q not found at static/%s (in %s)" $src $src $.Position -}}
+{{- end -}}
+{{- $url := printf "/%s" $src -}}
+{{- $caption := .Get "caption" -}}
+{{- $theme := .Get "theme" | default "asciinema" -}}
+{{- $poster := .Get "poster" | default "npt:0:02" -}}
+{{- $idle := .Get "idle" | default "2" -}}
+{{- $speed := .Get "speed" | default "1" -}}
+{{- $n := add 1 (int (.Page.Scratch.Get "asciinemaCount")) -}}
+{{- .Page.Scratch.Set "asciinemaCount" $n -}}
+{{- $id := printf "asciinema-cast-%d" $n -}}
+{{- if eq $n 1 }}
+<link rel="stylesheet" href="/asciinema/asciinema-player.css">
+<script src="/asciinema/asciinema-player.min.js"></script>
+{{- end }}
+<figure class="asciinema-cast">
+    <div id="{{ $id }}"></div>
+    {{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+<script>
+    AsciinemaPlayer.create(
+        {{ $url | jsonify | safeJS }},
+        document.getElementById({{ $id | jsonify | safeJS }}),
+        {
+            autoPlay: false,
+            preload: true,
+            fit: "width",
+            theme: {{ $theme | jsonify | safeJS }},
+            poster: {{ $poster | jsonify | safeJS }},
+            idleTimeLimit: {{ $idle }},
+            speed: {{ $speed }},
+            controls: true
+        }
+    );
+</script>

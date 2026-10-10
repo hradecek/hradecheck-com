@@ -1,0 +1,37 @@
+# Byte-identical to appset-demo.yaml EXCEPT metadata.name.
+# That is the whole point: the rename is one line, the blast radius is an environment.
+#
+# Note that template.metadata.name does NOT reference the ApplicationSet name, so the generated
+# Application names stay demo-one / demo-two. That is exactly why adoption works here.
+# In a real setup, check whether anything in your name template moves when you rename the appset.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-new
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: one
+          - name: two
+  template:
+    metadata:
+      name: "demo-{{.name}}"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/argoproj/argocd-example-apps.git
+        targetRevision: HEAD
+        path: guestbook
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "demo-{{.name}}"
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true

@@ -1,0 +1,35 @@
+# Demo ApplicationSet for the rename footgun.
+# goTemplate is set explicitly: it is off by default, and {{.name}} only works with it on.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-old
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: one
+          - name: two
+  template:
+    metadata:
+      name: "demo-{{.name}}"
+      finalizers:
+        # This is what turns "delete the Application" into "delete the workloads".
+        # Drop it and the resources are abandoned instead of pruned - try both.
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/argoproj/argocd-example-apps.git
+        targetRevision: HEAD
+        path: guestbook
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "demo-{{.name}}"
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true

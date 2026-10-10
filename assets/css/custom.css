@@ -412,3 +412,93 @@ body {
        url('/fonts/abril-fatface-v25-latin-ext-regular.woff') format('woff');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
+/* ---------------------------------------------------------------------------
+   Callouts  ({{< callout type="info|warning|danger" title="..." >}})
+   Colours follow the site palette: the lime/olive accent for info, amber for
+   warning, red for danger. Defined as variables so light and dark stay in sync
+   with the theme's own body / body.dark-theme pattern.
+   --------------------------------------------------------------------------- */
+body {
+    --callout-info-accent: #6b7a1a;
+    --callout-info-bg: rgba(107, 122, 26, 0.09);
+    --callout-warning-accent: #a35a06;
+    --callout-warning-bg: rgba(163, 90, 6, 0.09);
+    --callout-danger-accent: #a8261e;
+    --callout-danger-bg: rgba(168, 38, 30, 0.08);
+}
+
+body.dark-theme {
+    --callout-info-accent: #c8d749;
+    --callout-info-bg: rgba(200, 215, 73, 0.10);
+    --callout-warning-accent: #f0b429;
+    --callout-warning-bg: rgba(240, 180, 41, 0.10);
+    --callout-danger-accent: #ff7b70;
+    --callout-danger-bg: rgba(255, 123, 112, 0.10);
+}
+
+.callout {
+    margin: 1.6rem 0;
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--callout-accent);
+    border-radius: 3px;
+    background-color: var(--callout-bg);
+}
+
+.callout-info    { --callout-accent: var(--callout-info-accent);    --callout-bg: var(--callout-info-bg); }
+.callout-warning { --callout-accent: var(--callout-warning-accent); --callout-bg: var(--callout-warning-bg); }
+.callout-danger  { --callout-accent: var(--callout-danger-accent);  --callout-bg: var(--callout-danger-bg); }
+
+.callout-head {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.45rem;
+    color: var(--callout-accent);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.callout-icon {
+    flex: 0 0 auto;
+}
+
+/* Body text keeps normal colour so the callout reads as prose, not as a badge. */
+.callout-body {
+    color: var(--text-color);
+}
+
+.callout-body > :first-child { margin-top: 0; }
+.callout-body > :last-child  { margin-bottom: 0; }
+
+/* Code inside a callout should not fight the tinted background. */
+.callout-body code {
+    background-color: transparent;
+    border: 1px solid var(--callout-accent);
+    padding: 0.05em 0.3em;
+}
+
+/* ---------------------------------------------------------------------------
+   asciinema casts  ({{< asciinema src="casts/x.cast" caption="..." >}})
+   Player CSS is self-hosted in static/asciinema/. Only the wrapper is styled
+   here so the figure and caption match .post-image.
+   --------------------------------------------------------------------------- */
+.asciinema-cast {
+    margin: 1.8rem 0;
+}
+
+.asciinema-cast .asciinema-player {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.asciinema-cast figcaption {
+    margin-top: 0.6rem;
+    text-align: center;
+    font-size: 0.85em;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--date-color);
+}
