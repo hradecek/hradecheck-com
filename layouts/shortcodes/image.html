@@ -12,7 +12,7 @@
 {{- $rest := strings.TrimPrefix $stem $src -}}
 {{- $dark := resources.Get (printf "%s_dark%s" $stem $rest) -}}
 <figure class="post-image">
-    <img class="img-light" src="{{ $light.RelPermalink }}" alt="{{ $alt }}" loading="lazy">
+    <img{{ with $dark }} class="img-light"{{ end }} src="{{ $light.RelPermalink }}" alt="{{ $alt }}" loading="lazy">
     {{- with $dark }}
     <img class="img-dark" src="{{ .RelPermalink }}" alt="{{ $alt }}" loading="lazy">
     {{- end }}
